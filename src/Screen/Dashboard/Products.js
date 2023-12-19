@@ -1,9 +1,10 @@
 import React from "react";
+import SideBar from "./SideBar";
 
 const Products = () => {
   return (
     <div>
-      <h1>All list Products</h1>
+      <SideBar></SideBar>
     </div>
   );
 };
