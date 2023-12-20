@@ -5,6 +5,7 @@ import { FaUsersLine } from "react-icons/fa6";
 import img from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 import { MdOutlineClose } from "react-icons/md";
+import { HiOutlineChartBar } from "react-icons/hi2";
 
 const SideBar = ({ side, closeSide }) => {
   return (
@@ -34,6 +35,12 @@ const SideBar = ({ side, closeSide }) => {
         <FaUsersLine />
         <Link to="/dashboard/products">
           <p className="ml-2 capitalize">customers</p>
+        </Link>
+      </div>
+      <div className="flex p-2 mt-2 text-white items-center hover:bg-gray-500 transition-all">
+        <HiOutlineChartBar />
+        <Link to="/dashboard/categories">
+          <p className="ml-2 capitalize">categories</p>
         </Link>
       </div>
     </div>
