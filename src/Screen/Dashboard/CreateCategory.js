@@ -2,8 +2,17 @@ import React from "react";
 import Wrapper from "./Wrapper";
 import { Link } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
+import { useCreateMutation } from "../../store/Services/CategoryService";
 
 const CreateCategory = () => {
+  const [saveCategory, data] = useCreateMutation();
+  const errors = data?.error?.data?.error ? data?.error?.data?.error : [];
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    saveCategory({ name });
+    console.log(data);
+  };
   return (
     <div>
       <Wrapper>
@@ -13,19 +22,25 @@ const CreateCategory = () => {
             categories list
           </div>
         </Link>
-        <form className="w-full md:w-8/12">
-          <h2 className="mb-3">Create Category</h2>
+        <form onSubmit={handleSubmit} className="w-full md:w-8/12">
+          <h2 className="m-3 font-semibold">Create Category</h2>
+          {errors &&
+            errors.map((error, index) => (
+              <p className="alert-danger" key={index}>
+                {error.msg}
+              </p>
+            ))}
           <input
             className="w-full form-control"
             type="text"
-            name=""
+            name="name"
             id=""
             placeholder="category name"
           />
           <input
             className="btn-indigo "
             type="submit"
-            value="create category"
+            value={data.isLoading ? "Loading...." : "create category"}
           />
         </form>
       </Wrapper>

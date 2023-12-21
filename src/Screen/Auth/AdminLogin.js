@@ -25,7 +25,7 @@ const AdminLogin = () => {
       dispatch(setAdminToken(response?.data?.token));
       navigate("/dashboard/products");
     }
-  }, [response.isSuccess]);
+  }, [response.isSuccess, dispatch, navigate, response?.data?.token]);
 
   const handleInputs = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -44,9 +44,7 @@ const AdminLogin = () => {
         {errors.length > 0 &&
           errors.map((error, index) => (
             <div key={index}>
-              <p className="text-red-700 bg-red-100 p-2 mb-3 font-medium text-sm rounded-md">
-                {error.err || error.msg}
-              </p>
+              <p className="alert-danger">{error.err || error.msg}</p>
             </div>
           ))}
         <div>

@@ -12,4 +12,7 @@
   .btn-indigo {
     @apply bg-indigo-700 text-white p-2 hover:text-green-600 rounded-md capitalize;
   }
+  .alert-danger {
+    @apply text-red-700 bg-red-100 p-2 mb-3 font-medium text-sm rounded-md;
+  }
 }
