@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Wrapper from "./Wrapper";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
 import { useCreateMutation } from "../../store/Services/CategoryService";
+import { useDispatch } from "react-redux";
+import { setSuccess } from "../../store/Reducer/globalReducer";
+import { FaXmark } from "react-icons/fa6";
 
 const CreateCategory = () => {
   const [saveCategory, data] = useCreateMutation();
-  const errors = data?.error?.data?.error ? data?.error?.data?.error : [];
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const errors = data?.error?.data?.errors ? data?.error?.data?.errors : [];
+  console.log(data);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
-    saveCategory({ name });
-    console.log(data);
+    saveCategory({ name: name });
+    // console.log(data);
   };
+  useEffect(() => {
+    if (data?.isSuccess) {
+      dispatch(setSuccess(data?.data?.message));
+      navigate("/dashboard/categories");
+    }
+  }, [data?.isSuccess, dispatch, data, navigate]);
   return (
     <div>
       <Wrapper>
@@ -24,9 +37,10 @@ const CreateCategory = () => {
         </Link>
         <form onSubmit={handleSubmit} className="w-full md:w-8/12">
           <h2 className="m-3 font-semibold">Create Category</h2>
-          {errors &&
+          {errors.length > 0 &&
             errors.map((error, index) => (
-              <p className="alert-danger" key={index}>
+              <p className="alert-danger flex items-center" key={index}>
+                <FaXmark className="mr-2" />
                 {error.msg}
               </p>
             ))}
