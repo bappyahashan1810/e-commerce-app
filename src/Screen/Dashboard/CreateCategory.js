@@ -11,7 +11,11 @@ const CreateCategory = () => {
   const [saveCategory, data] = useCreateMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const errors = data?.error?.data?.errors ? data?.error?.data?.errors : [];
+  const errors = data?.error?.data?.errors
+    ? data?.error?.data?.errors
+    : data?.error?.data?.error
+    ? data?.error?.data?.error
+    : [];
   console.log(data);
 
   const handleSubmit = (e) => {

@@ -1,6 +1,4 @@
 import React from "react";
-import SideBar from "./SideBar";
-import DashboardNavbar from "./DashboardNavbar";
 import Wrapper from "./Wrapper";
 
 const Products = () => {
