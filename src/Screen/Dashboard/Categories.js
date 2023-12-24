@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
 import Wrapper from "./Wrapper";
 import ScreenHead from "../ScreenHead";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { IoMdAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { FaCheck } from "react-icons/fa6";
 import { setClear, setSuccess } from "../../store/Reducer/globalReducer";
+import { useGetQuery } from "../../store/Services/CategoryService";
 
 const Categories = () => {
   const { success } = useSelector((state) => state.globalReducer);
   const dispatch = useDispatch();
+  const { page } = useParams();
+  const { data = [], isLoading } = useGetQuery(page ? page : 1);
+  console.log("your data:", data, isLoading);
   useEffect(() => {
     dispatch(setSuccess(success));
     return () => {

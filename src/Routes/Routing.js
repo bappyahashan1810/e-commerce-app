@@ -31,6 +31,14 @@ const Routing = () => {
             }
           />
           <Route
+            path="categories/:page"
+            element={
+              <Private>
+                <Categories />
+              </Private>
+            }
+          />
+          <Route
             path="categories"
             element={
               <Private>
