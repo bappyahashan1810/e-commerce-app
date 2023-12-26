@@ -23,6 +23,16 @@ const categoryService = createApi({
         },
         invalidatesTags: ["categories"],
       }),
+      updateCategory: builder.mutation({
+        query: ({ name, id }) => {
+          return {
+            url: `update-category/${id}`,
+            method: "PUT",
+            body: { name },
+          };
+        },
+        invalidatesTags: ["categories"],
+      }),
       get: builder.query({
         query: (page) => {
           return {
@@ -35,15 +45,20 @@ const categoryService = createApi({
       fetchCategory: builder.query({
         query: (id) => {
           return {
-            url: `/update-category/${id}`,
+            url: `/fetch-category/${id}`,
             method: "GET",
           };
         },
+        providesTags: ["categories"],
       }),
     };
   },
 });
 
-export const { useCreateMutation, useGetQuery, useFetchCategoryQuery } =
-  categoryService;
+export const {
+  useCreateMutation,
+  useGetQuery,
+  useFetchCategoryQuery,
+  useUpdateCategoryMutation,
+} = categoryService;
 export default categoryService;
