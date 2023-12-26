@@ -20,7 +20,10 @@ const Pagination = ({ page, perpage, count }) => {
     let allLinks = [];
     for (let i = startLoop; i <= endLoop; i++) {
       allLinks.push(
-        <li key={i}>
+        <li
+          key={i}
+          className={`${page === i && "bg-gray-300 px-2 rounded-md"}`}
+        >
           <Link to={`/dashboard/categories/${i}`}>{i}</Link>
         </li>
       );
@@ -51,7 +54,7 @@ const Pagination = ({ page, perpage, count }) => {
   };
   return (
     count > 3 && (
-      <ul className="flex justify-center space-x-3 text-gray-400 bg-gray-800 p-4">
+      <ul className="flex justify-center space-x-5 text-gray-400 bg-gray-800 p-4">
         {pre()}
         {links()}
         {next()}

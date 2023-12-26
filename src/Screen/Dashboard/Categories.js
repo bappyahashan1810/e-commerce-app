@@ -9,6 +9,7 @@ import { setClear, setSuccess } from "../../store/Reducer/globalReducer";
 import { useGetQuery } from "../../store/Services/CategoryService";
 import Snipper from "../Snipper";
 import Pagination from "./Pagination";
+import { FaRegEdit } from "react-icons/fa";
 
 const Categories = () => {
   const { success } = useSelector((state) => state.globalReducer);
@@ -67,7 +68,11 @@ const Categories = () => {
                           {category.name}
                         </td>
                         <td className="text-base font-normal text-gray-400 p-3 capitalize">
-                          <button>edit</button>
+                          <Link
+                            to={`/dashboard/update-category/${category._id}`}
+                          >
+                            <FaRegEdit className="text-xl" />
+                          </Link>
                         </td>
                         <td className="text-base font-normal text-gray-400 p-3 capitalize">
                           <button>Delete</button>

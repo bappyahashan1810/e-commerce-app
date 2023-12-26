@@ -6,6 +6,7 @@ import Private from "./Private";
 import Public from "./Public";
 import Categories from "../Screen/Dashboard/Categories";
 import CreateCategory from "../Screen/Dashboard/CreateCategory";
+import UpdateCategory from "../Screen/Dashboard/UpdateCategory";
 
 const Routing = () => {
   return (
@@ -51,6 +52,14 @@ const Routing = () => {
             element={
               <Private>
                 <CreateCategory />
+              </Private>
+            }
+          />
+          <Route
+            path="update-category/:id"
+            element={
+              <Private>
+                <UpdateCategory />
               </Private>
             }
           />
