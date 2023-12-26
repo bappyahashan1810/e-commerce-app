@@ -6,10 +6,14 @@ import { IoMdAdd } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { FaCheck } from "react-icons/fa6";
 import { setClear, setSuccess } from "../../store/Reducer/globalReducer";
-import { useGetQuery } from "../../store/Services/CategoryService";
+import {
+  useCategoryDeleteMutation,
+  useGetQuery,
+} from "../../store/Services/CategoryService";
 import Snipper from "../Snipper";
 import Pagination from "./Pagination";
 import { FaRegEdit } from "react-icons/fa";
+import { MdAutoDelete } from "react-icons/md";
 
 const Categories = () => {
   const { success } = useSelector((state) => state.globalReducer);
@@ -19,13 +23,24 @@ const Categories = () => {
     page = 1;
   }
   const { data = [], isLoading } = useGetQuery(page);
-  console.log("your data:", data, isLoading);
+  const [deleteData, response] = useCategoryDeleteMutation();
+  console.log("your data:", response);
   useEffect(() => {
     dispatch(setSuccess(success));
     return () => {
       dispatch(setClear());
     };
   }, [dispatch, success]);
+  const deleteCategory = (id, name) => {
+    if (window.confirm(`Are you sure want to delete ${name}?`)) {
+      deleteData(id);
+    }
+  };
+  useEffect(() => {
+    if (response?.isSuccess) {
+      dispatch(setSuccess(response?.data?.message));
+    }
+  }, [response, dispatch]);
   return (
     <div>
       <Wrapper>
@@ -70,12 +85,20 @@ const Categories = () => {
                         <td className="text-base font-normal text-gray-400 p-3 capitalize">
                           <Link
                             to={`/dashboard/update-category/${category._id}`}
+                            className=""
                           >
-                            <FaRegEdit className="text-xl" />
+                            <FaRegEdit className="text-xl " />
                           </Link>
                         </td>
                         <td className="text-base font-normal text-gray-400 p-3 capitalize">
-                          <button>Delete</button>
+                          <button
+                            onClick={() =>
+                              deleteCategory(category._id, category.name)
+                            }
+                            className="hover:bg-gray-500 p-2 rounded-md"
+                          >
+                            <MdAutoDelete className="text-rose-700 text-2xl" />
+                          </button>
                         </td>
                       </tr>
                     ))}
