@@ -3,11 +3,14 @@
 @tailwind utilities;
 
 @layer components {
+  .btn {
+    @apply px-4 py-2 capitalize rounded-sm;
+  }
   .btn-dark {
     @apply bg-gray-600 px-3 py-2 rounded-sm hover:text-blue-900;
   }
   .form-control {
-    @apply bg-gray-700 text-left p-2 outline-none capitalize;
+    @apply bg-gray-800  text-left p-2  outline-none capitalize focus:ring-[2px] rounded-sm ring-blue-500;
   }
   .btn-indigo {
     @apply bg-indigo-700 text-white p-2 hover:text-green-600 rounded-md capitalize;
@@ -17,5 +20,8 @@
   }
   .alert-success {
     @apply text-white bg-green-800 p-2 mb-3 font-medium text-sm rounded-md;
+  }
+  .title {
+    @apply block capitalize text-gray-400 p-2 text-base mb-2;
   }
 }

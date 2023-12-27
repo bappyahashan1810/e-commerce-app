@@ -1,15 +1,20 @@
 import React from "react";
 import Wrapper from "./Wrapper";
+import ScreenHead from "../ScreenHead";
+import { Link } from "react-router-dom";
+import { FaPlus } from "react-icons/fa6";
 
 const Products = () => {
   return (
     <Wrapper>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consectetur,
-      incidunt. Numquam autem provident rem, unde quos vel a nobis quaerat
-      earum? Dicta a, dolores aliquid laboriosam facilis enim amet voluptatem
-      beatae, dolor facere repellat, placeat sapiente vero officiis voluptatum!
-      Esse laudantium quod illum optio delectus odio, nulla perspiciatis in
-      exercitationem?
+      <ScreenHead>
+        <Link to="/dashboard/create-product">
+          <button className="btn btn-dark flex items-center">
+            Create Product
+            <FaPlus className="ml-2 text-xl " />
+          </button>
+        </Link>
+      </ScreenHead>
     </Wrapper>
   );
 };
