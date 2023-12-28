@@ -9,6 +9,7 @@ import { TwitterPicker } from "react-color";
 import { v4 as uuidv4 } from "uuid";
 import ColorList from "./ColorList";
 import SizeList from "./SizeList";
+import ImagePreview from "./ImagePreview";
 
 const CreateProduct = () => {
   const { data = [], isLoading } = useAllCategoriesQuery();
@@ -19,6 +20,9 @@ const CreateProduct = () => {
     stock: 0,
     category: "",
     colors: [],
+    image1: "",
+    image2: "",
+    image3: "",
   });
   const sizes = [
     { name: "xsm" },
@@ -33,6 +37,11 @@ const CreateProduct = () => {
     { name: "4 years" },
     { name: "5 years" },
   ];
+  const [preview, setPreview] = useState({
+    image1: "",
+    image2: "",
+    image3: "",
+  });
   const [sizeList, setSizeList] = useState([]);
   const inputValue = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -56,6 +65,17 @@ const CreateProduct = () => {
     const filterd = sizeList.filter((sz) => sz.name !== size.name);
     setSizeList(filterd);
   };
+  const handleImage = (e) => {
+    if (e.target.files.length > 0) {
+      setState({ ...state, [e.target.name]: e.target.files[0] });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview({ ...preview, [e.target.name]: reader.result });
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+  console.log(preview);
   return (
     <div>
       <Wrapper>
@@ -190,9 +210,10 @@ const CreateProduct = () => {
                 </label>
                 <input
                   className="input-file"
+                  onChange={handleImage}
                   type="file"
                   name="image1"
-                  id="image1"
+                  id="image2"
                 />
               </div>
               <div className="w-full p-3">
@@ -201,8 +222,9 @@ const CreateProduct = () => {
                 </label>
                 <input
                   className="input-file"
+                  onChange={handleImage}
                   type="file"
-                  name="image1"
+                  name="image2"
                   id="image2"
                 />
               </div>
@@ -212,8 +234,9 @@ const CreateProduct = () => {
                 </label>
                 <input
                   className="input-file"
+                  onChange={handleImage}
                   type="file"
-                  name="image1"
+                  name="image3"
                   id="image3"
                 />
               </div>
@@ -222,6 +245,9 @@ const CreateProduct = () => {
           <div className="w-full md:w-4/12 p-3 ">
             <ColorList colors={state.colors} deleteColor={deleteColor} />
             <SizeList sizeList={sizeList} deleteSize={deleteSize} />
+            <ImagePreview heading="image1" url={preview.image1} />
+            <ImagePreview heading="image2" url={preview.image2} />
+            <ImagePreview heading="image3" url={preview.image3} />
           </div>
         </div>
       </Wrapper>
