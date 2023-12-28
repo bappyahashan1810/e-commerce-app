@@ -166,7 +166,7 @@ const CreateProduct = () => {
                 </label>
                 <TwitterPicker onChangeComplete={handleColor} />
               </div>
-              <div className="w-full md:w-6/12 p-3">
+              <div className="w-full p-3">
                 <label htmlFor="colors" className="title">
                   Choose sizes
                 </label>
@@ -183,6 +183,39 @@ const CreateProduct = () => {
                     ))}
                   </div>
                 )}
+              </div>
+              <div className="w-full p-3">
+                <label htmlFor="image1" className="title">
+                  image 1
+                </label>
+                <input
+                  className="input-file"
+                  type="file"
+                  name="image1"
+                  id="image1"
+                />
+              </div>
+              <div className="w-full p-3">
+                <label htmlFor="image2" className="title">
+                  image 2
+                </label>
+                <input
+                  className="input-file"
+                  type="file"
+                  name="image1"
+                  id="image2"
+                />
+              </div>
+              <div className="w-full p-2">
+                <label htmlFor="image3" className="title">
+                  image 3
+                </label>
+                <input
+                  className="input-file"
+                  type="file"
+                  name="image1"
+                  id="image3"
+                />
               </div>
             </div>
           </div>

@@ -22,12 +22,15 @@
     @apply text-white bg-green-800 p-2 mb-3 font-medium text-sm rounded-md;
   }
   .title {
-    @apply block capitalize text-gray-400 p-2 text-base mb-2;
+    @apply block capitalize text-gray-400 p-2 text-base mb-2 mt-0;
   }
   .size {
     @apply border border-gray-400 px-3 text-gray-400 text-sm py-1.5 rounded mt-2 uppercase cursor-pointer;
   }
   .heading {
     @apply capitalize text-gray-400 font-semibold;
+  }
+  .input-file {
+    @apply file:px-2 py-3 text-sm capitalize file:capitalize file:text-base file:rounded file:bg-indigo-600 file:text-white file:border file:border-gray-400;
   }
 }
