@@ -33,4 +33,10 @@
   .input-file {
     @apply file:px-2 py-3 text-sm capitalize file:capitalize file:text-base file:rounded file:bg-indigo-600 file:text-white file:border file:border-gray-400;
   }
+  .ql-toolbar.ql-snow {
+    @apply border-none bg-gray-900 !important;
+  }
+  .ql-snow * {
+    @apply bg-gray-400 !important;
+  }
 }

@@ -10,9 +10,12 @@ import { v4 as uuidv4 } from "uuid";
 import ColorList from "./ColorList";
 import SizeList from "./SizeList";
 import ImagePreview from "./ImagePreview";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const CreateProduct = () => {
   const { data = [], isLoading } = useAllCategoriesQuery();
+  const [value, setValue] = useState("");
   const [state, setState] = useState({
     title: "",
     price: 0,
@@ -75,7 +78,7 @@ const CreateProduct = () => {
       reader.readAsDataURL(e.target.files[0]);
     }
   };
-  console.log(preview);
+
   return (
     <div>
       <Wrapper>
@@ -238,6 +241,25 @@ const CreateProduct = () => {
                   type="file"
                   name="image3"
                   id="image3"
+                />
+              </div>
+              <div className="w-full p-3">
+                <label htmlFor="description" className="title">
+                  Description
+                </label>
+                <ReactQuill
+                  theme="snow"
+                  className="placeholder:text-white"
+                  value={value}
+                  onChange={setValue}
+                  placeholder="Description"
+                />
+              </div>
+              <div className="w-full p-3">
+                <input
+                  type="submit"
+                  className=" btn-indigo w-full"
+                  value="Submit"
                 />
               </div>
             </div>
