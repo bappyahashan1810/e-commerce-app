@@ -106,7 +106,7 @@ const CreateProduct = () => {
 
   useEffect(() => {
     response?.error?.data?.errors.map((err) => {
-      toast.error(err.msg);
+      return toast.error(err.msg);
     });
   }, [response?.error?.data?.errors]);
   useEffect(() => {

@@ -24,7 +24,6 @@ const Categories = () => {
   }
   const { data = [], isLoading } = useGetQuery(page);
   const [deleteData, response] = useCategoryDeleteMutation();
-  console.log("your data:", response);
   useEffect(() => {
     dispatch(setSuccess(success));
     return () => {

@@ -1,15 +1,22 @@
 import React, { useEffect } from "react";
 import Wrapper from "./Wrapper";
 import ScreenHead from "../ScreenHead";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { setClear } from "../../store/Reducer/globalReducer";
+import { useGetProductQuery } from "../../store/Services/ProductService";
 
 const Products = () => {
   const { success } = useSelector((state) => state.globalReducer);
   const dispatch = useDispatch();
+  let { page } = useParams();
+  if (!page) {
+    page = 1;
+  }
+  const { data = [], isFetching } = useGetProductQuery(page);
+  console.log(data);
   useEffect(() => {
     if (success) {
       toast.success(success);

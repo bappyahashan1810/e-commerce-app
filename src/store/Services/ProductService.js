@@ -22,8 +22,16 @@ const productService = createApi({
           };
         },
       }),
+      getProduct: builder.query({
+        query: (page) => {
+          return {
+            url: `products/${page}`,
+            method: "GET",
+          };
+        },
+      }),
     };
   },
 });
-export const { useCreateProductMutation } = productService;
+export const { useCreateProductMutation, useGetProductQuery } = productService;
 export default productService;
