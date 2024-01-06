@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Wrapper from "./Wrapper";
 import ScreenHead from "../ScreenHead";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
 import { useAllCategoriesQuery } from "../../store/Services/CategoryService";
 import Snipper from "../Snipper";
@@ -12,9 +12,16 @@ import SizeList from "./SizeList";
 import ImagePreview from "./ImagePreview";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useCreateProductMutation } from "../../store/Services/ProductService";
+import toast, { Toaster } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { setSuccess } from "../../store/Reducer/globalReducer";
 
 const CreateProduct = () => {
   const { data = [], isLoading } = useAllCategoriesQuery();
+  const [saveData, response] = useCreateProductMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [state, setState] = useState({
     title: "",
@@ -26,6 +33,7 @@ const CreateProduct = () => {
     image1: "",
     image2: "",
     image3: "",
+    description: "",
   });
   const sizes = [
     { name: "xsm" },
@@ -46,9 +54,7 @@ const CreateProduct = () => {
     image3: "",
   });
   const [sizeList, setSizeList] = useState([]);
-  const inputValue = (e) => {
-    setState({ ...state, [e.target.name]: e.target.value });
-  };
+
   const handleColor = (color) => {
     const filtered = state.colors.filter((clr) => clr.color !== color.hex);
     setState({
@@ -56,10 +62,12 @@ const CreateProduct = () => {
       colors: [...filtered, { color: color.hex, id: uuidv4() }],
     });
   };
+
   const deleteColor = (color) => {
     const filterd = state.colors.filter((clr) => clr.color !== color);
     setState({ ...state, colors: filterd });
   };
+
   const handleSize = (size) => {
     const filtered = sizeList.filter((sz) => sz.name !== size.name);
     setSizeList([...filtered, size]);
@@ -68,9 +76,10 @@ const CreateProduct = () => {
     const filterd = sizeList.filter((sz) => sz.name !== size.name);
     setSizeList(filterd);
   };
+
   const handleImage = (e) => {
-    if (e.target.files.length > 0) {
-      setState({ ...state, [e.target.name]: e.target.files[0] });
+    if (e.target.files.length !== 0) {
+      setState({ ...state, [e.target.name]: e.target.files[0] || null });
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview({ ...preview, [e.target.name]: reader.result });
@@ -78,6 +87,34 @@ const CreateProduct = () => {
       reader.readAsDataURL(e.target.files[0]);
     }
   };
+
+  const inputValue = (e) => {
+    setState({ ...state, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(state));
+    formData.append("sizes", JSON.stringify(sizeList));
+    formData.append("description", value);
+    formData.append("image1", state.image1);
+    formData.append("image2", state.image2);
+    formData.append("image3", state.image3);
+    saveData(formData);
+  };
+
+  useEffect(() => {
+    response?.error?.data?.errors.map((err) => {
+      toast.error(err.msg);
+    });
+  }, [response?.error?.data?.errors]);
+  useEffect(() => {
+    if (response.isSuccess) {
+      dispatch(setSuccess(response?.data?.msg));
+      navigate("/dashboard/products");
+    }
+  }, [response?.data?.msg, response?.isSuccess, dispatch, navigate]);
 
   return (
     <div>
@@ -90,8 +127,9 @@ const CreateProduct = () => {
             </button>
           </Link>
         </ScreenHead>
+        <Toaster position="top-right" reverseOrder={true} />
         <div className="flex flex-wrap -mx-3">
-          <div className="w-full md:w-8/12 p-3">
+          <form onSubmit={handleSubmit} className="w-full md:w-8/12 p-3">
             <div className="flex flex-wrap items-center">
               <div className="w-full md:w-6/12 p-3">
                 <label htmlFor="title" className="title">
@@ -216,7 +254,7 @@ const CreateProduct = () => {
                   onChange={handleImage}
                   type="file"
                   name="image1"
-                  id="image2"
+                  id="image1"
                 />
               </div>
               <div className="w-full p-3">
@@ -263,7 +301,7 @@ const CreateProduct = () => {
                 />
               </div>
             </div>
-          </div>
+          </form>
           <div className="w-full md:w-4/12 p-3 ">
             <ColorList colors={state.colors} deleteColor={deleteColor} />
             <SizeList sizeList={sizeList} deleteSize={deleteSize} />
