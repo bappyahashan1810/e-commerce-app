@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ImBackward2 } from "react-icons/im";
 import { FaForward } from "react-icons/fa";
 
-const Pagination = ({ page, perpage, count }) => {
+const Pagination = ({ page, perpage, count, path }) => {
   console.log(page, perpage, count);
   const totalLink = Math.ceil(count / perpage);
   let startLoop = page;
@@ -24,7 +24,7 @@ const Pagination = ({ page, perpage, count }) => {
           key={i}
           className={`${page === i && "bg-gray-300 px-2 rounded-md"}`}
         >
-          <Link to={`/dashboard/categories/${i}`}>{i}</Link>
+          <Link to={`/${path}/${i}`}>{i}</Link>
         </li>
       );
     }
@@ -34,7 +34,7 @@ const Pagination = ({ page, perpage, count }) => {
     if (page < totalLink) {
       return (
         <li>
-          <Link to={`/dashboard/categories/${page + 1}`}>
+          <Link to={`/${path}/${page + 1}`}>
             <FaForward className="text-xl" />
           </Link>
         </li>
@@ -45,7 +45,7 @@ const Pagination = ({ page, perpage, count }) => {
     if (page > 1) {
       return (
         <li>
-          <Link to={`/dashboard/categories/${page - 1}`}>
+          <Link to={`/${path}/${page - 1}`}>
             <ImBackward2 className="text-2xl" />
           </Link>
         </li>
@@ -53,7 +53,7 @@ const Pagination = ({ page, perpage, count }) => {
     }
   };
   return (
-    count > 3 && (
+    count > perpage && (
       <ul className="flex justify-center space-x-5 text-gray-400 bg-gray-800 p-4">
         {pre()}
         {links()}

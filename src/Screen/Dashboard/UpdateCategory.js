@@ -21,7 +21,6 @@ const UpdateCategory = () => {
   const errors = response?.error?.data?.errors
     ? response?.error?.data?.errors
     : "";
-  console.log(response);
   const handleSubmit = (e) => {
     e.preventDefault();
     const name = e.target.name.value;

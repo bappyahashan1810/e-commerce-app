@@ -109,6 +109,7 @@ const Categories = () => {
                   page={parseInt(page)}
                   perpage={data.perPage}
                   count={data.count}
+                  path="dashboard/categories"
                 />
               </div>
             </>

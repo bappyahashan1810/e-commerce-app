@@ -8,6 +8,7 @@ import Categories from "../Screen/Dashboard/Categories";
 import CreateCategory from "../Screen/Dashboard/CreateCategory";
 import UpdateCategory from "../Screen/Dashboard/UpdateCategory";
 import CreateProduct from "../Screen/Dashboard/CreateProduct";
+import EditProduct from "../Screen/Dashboard/EditProduct";
 
 const Routing = () => {
   return (
@@ -77,6 +78,14 @@ const Routing = () => {
             element={
               <Private>
                 <CreateProduct />
+              </Private>
+            }
+          />
+          <Route
+            path="edit-product/:id"
+            element={
+              <Private>
+                <EditProduct />
               </Private>
             }
           />
