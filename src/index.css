@@ -39,4 +39,13 @@
   .ql-snow * {
     @apply bg-gray-400 !important;
   }
+  .nav {
+    @apply w-full h-[70px] shadow-sm flex items-center;
+  }
+  .my-container {
+    @apply max-w-screen-lg w-full mx-auto px-6;
+  }
+  .cart {
+    @apply absolute -top-3 -right-2 w-[20px] h-[20px] rounded-full bg-indigo-700 text-white flex items-center justify-center p-1 text-sm;
+  }
 }

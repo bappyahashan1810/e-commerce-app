@@ -6,7 +6,10 @@ import { FaPlus } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { setClear } from "../../store/Reducer/globalReducer";
-import { useGetProductsQuery } from "../../store/Services/ProductService";
+import {
+  useDeleteProductMutation,
+  useGetProductsQuery,
+} from "../../store/Services/ProductService";
 import Snipper from "../Snipper";
 import { FaRegEdit } from "react-icons/fa";
 import { MdAutoDelete } from "react-icons/md";
@@ -20,7 +23,8 @@ const Products = () => {
     page = 1;
   }
   const { data = [], isFetching } = useGetProductsQuery(page);
-  console.log(data, isFetching);
+  const [delProduct, response] = useDeleteProductMutation();
+  console.log(response);
   useEffect(() => {
     if (success) {
       toast.success(success);
@@ -29,6 +33,11 @@ const Products = () => {
       dispatch(setClear());
     };
   }, [success, dispatch]);
+  const deleteProduct = (id) => {
+    if (window.confirm("Are you Sure want to Delete?")) {
+      delProduct(id);
+    }
+  };
   return (
     <Wrapper>
       <ScreenHead>
@@ -96,7 +105,10 @@ const Products = () => {
                         </Link>
                       </td>
                       <td className="text-base font-normal text-gray-400 p-3 capitalize">
-                        <button className="hover:bg-gray-500 p-2 rounded-md">
+                        <button
+                          onClick={() => deleteProduct(product._id)}
+                          className="hover:bg-gray-500 p-2 rounded-md"
+                        >
                           <MdAutoDelete className="text-rose-700 text-2xl" />
                         </button>
                       </td>

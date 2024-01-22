@@ -18,6 +18,7 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setSuccess } from "../../store/Reducer/globalReducer";
+import parse from "html-react-parser";
 
 const EditProduct = () => {
   const { data = [], isLoading } = useAllCategoriesQuery();
@@ -27,13 +28,6 @@ const EditProduct = () => {
   const { id } = useParams();
   const { data: product, isLoading: loading } = useGetProductQuery(id);
   const [value, setValue] = useState("");
-  useEffect(() => {
-    if (!loading) {
-      setState(product);
-      setSizeList(product?.sizes);
-      setValue(product?.description);
-    }
-  }, [product, loading]);
 
   const [state, setState] = useState({
     title: "",
@@ -45,6 +39,19 @@ const EditProduct = () => {
     description: "",
     sizes: [],
   });
+  useEffect(() => {
+    if (!loading) {
+      setState({ ...state, description: value });
+    }
+  }, [value, state, loading]);
+
+  useEffect(() => {
+    if (!loading) {
+      setState(product);
+      setSizeList(product?.sizes);
+      setValue(parse(product?.description));
+    }
+  }, [product, loading]);
 
   const sizes = [
     { name: "xsm" },

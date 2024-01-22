@@ -9,11 +9,13 @@ import CreateCategory from "../Screen/Dashboard/CreateCategory";
 import UpdateCategory from "../Screen/Dashboard/UpdateCategory";
 import CreateProduct from "../Screen/Dashboard/CreateProduct";
 import EditProduct from "../Screen/Dashboard/EditProduct";
+import Home from "../Screen/Home/Home";
 
 const Routing = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="auth">
           <Route
             path="admin-login"
